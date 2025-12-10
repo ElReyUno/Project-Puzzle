@@ -1,0 +1,17 @@
+task_description: |
+  Task: VendoVerse
+  Instructions: Implement the initial starter project setup for a full-stack e-commerce platform using Node.js + React (MERN stack). Create a basic structure with backend API routes for user accounts and product catalog, frontend components for product listing and shopping cart, and ensure Docker compatibility. The implementation must result in a working application with 20+ files, no compilation errors, and support for multi-file changes in future tasks. Follow the hybrid task relationship strategy by focusing on core features like user authentication and basic e-commerce logic.
+
+  Requirements:
+  - Set up Node.js backend with Express.js for API routes (e.g., /api/users, /api/products).
+  - Implement React frontend with components for product catalog, user login, and shopping cart.
+  - Ensure full-stack integration (e.g., API calls from frontend).
+  - Include configuration files (package.json, Dockerfile, docker-compose.yaml, run_tests.sh).
+  - Achieve 20+ files total (backend, frontend, config/tests).
+  - All code must be original, human-created, and compile without errors.
+  - Success criteria: Application runs via Docker, basic features functional (e.g., list products, add to cart), and ready for independent task extensions.
+
+difficulty: medium
+category: Feature
+tags: [nodejs, react, ecommerce, fullstack]
+parser_name: jest

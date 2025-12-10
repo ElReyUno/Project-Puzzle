@@ -1,0 +1,41 @@
+# Git
+.git
+.gitignore
+
+# Dependencies
+node_modules
+npm-debug.log*
+
+# Logs
+logs
+*.log
+
+# Environment files
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode
+.idea
+
+# Build artifacts
+dist
+build
+coverage
+.nyc_output
+
+# Temporary files
+tmp
+temp
+
+# Docker files
+Dockerfile
+.dockerignore
+docker-compose.yaml
+
+# Test files (if not needed in production image)
+tests/

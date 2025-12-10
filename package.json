@@ -1,0 +1,64 @@
+{
+  "name": "project-puzzle",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "E-commerce platform for Project Puzzle",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "build": "react-scripts build",
+    "test": "jest",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "stripe": "^12.0.0",
+    "yaml": "^2.8.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.0",
+    "@babel/preset-env": "^7.28.5",
+    "@babel/preset-react": "^7.22.0",
+    "@testing-library/jest-dom": "^6.0.0",
+    "@testing-library/react": "^14.3.1",
+    "babel-jest": "^27.5.1",
+    "jest": "^27.5.1",
+    "supertest": "^6.3.3"
+  },
+  "jest": {
+    "testMatch": [
+      "**/task_tests.js"
+    ],
+    "modulePaths": [
+      "<rootDir>"
+    ],
+    "rootDir": ".",
+    "roots": [
+      "<rootDir>"
+    ],
+    "testEnvironment": "jsdom",
+    "transform": {
+      "^.+\\.(js|jsx)$": "babel-jest"
+    },
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-dom",
+      "<rootDir>/tasks/jest.setup.js"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+services:
+  vendoverse:
+    build: .
+    container_name: vendoverse
+    environment:
+      - TASK_ID=${TASK_ID:-task-001}
+    command: ["${TASK_ID}"]
