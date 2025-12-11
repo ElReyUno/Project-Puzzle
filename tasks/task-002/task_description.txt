@@ -1,0 +1,18 @@
+task_description: |
+  Task: CI/CD & Security Automation
+  Instructions: Add and configure GitHub Actions workflows for CI (Node 20 build/test/lint), Docker image build/test, lint/static analysis, depcheck dependency scanning, Dependabot alerts, and CodeQL analysis. Ensure all workflows are valid, run successfully, and meet Project Puzzle acceptance criteria. Document the configuration and validate with tests.
+
+  Requirements:
+  - Add CI workflow for Node 20: install, build, test, lint.
+  - Add Docker workflow: build image, run tests in container.
+  - Add lint/static analysis workflow: eslint + prettier.
+  - Add depcheck workflow: scan for unused dependencies.
+  - Add Dependabot config for dependency updates.
+  - Add CodeQL workflow for security analysis.
+  - All workflows must be valid YAML and pass on push/PR.
+  - Success criteria: All workflows present, valid, and passing; security/config best practices followed.
+
+difficulty: medium
+category: Feature
+tags: [github-actions, ci, docker, lint, security, dependabot, codeql]
+parser_name: jest
