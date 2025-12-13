@@ -17,5 +17,8 @@ jobs:
           node-version: '20'
           cache: 'npm'
       - run: npm ci
+      - name: Validate workflow YAML documents
+        run: |
+          node -e "const fs=require('fs');const yaml=require('js-yaml');const dir='.github/workflows';const files=fs.readdirSync(dir).filter(f=>f.endsWith('.yml')||f.endsWith('.yaml'));let ok=true;for(const f of files){const p=dir+'/'+f;const raw=fs.readFileSync(p,'utf8');try{const docs=yaml.loadAll(raw);if(docs.length>1){console.error(`${p} contains ${docs.length} YAML documents`);ok=false}}catch(e){console.error(`${p} parse error: ${e.message}`);ok=false}};if(!ok)process.exit(1)"
       - run: npx eslint .
       - run: npx prettier --check .

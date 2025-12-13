@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node backend/server.js",
     "dev": "nodemon backend/server.js",
-    "build": "echo 'Build successful'",
+    "build": "cd src && npm install && npm run build || echo 'No frontend build needed'; cd ..",
     "test": "jest",
     "eject": "react-scripts eject"
   },

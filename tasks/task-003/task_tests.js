@@ -1,58 +1,67 @@
-// Task 2: CI/CD, lint, depcheck, Docker, security workflows tests
-import '@testing-library/jest-dom';
-import React from 'react';
 import request from 'supertest';
-import app from '../../backend/server.js'; // Backend entry point
-import { render, waitFor } from '@testing-library/react';
-import ProductList from '../../src/components/ProductList.js'; // Component path
-import ShoppingCart from '../../src/components/ShoppingCart.js'; // Component path
-const fs = require('fs');
-const { execSync } = require('child_process');
-const yaml = require('js-yaml');
+import app from '../../backend/server.js';
+import products from '../../backend/models/product.js';
 
-describe('Task 002 — CI/CD & Security workflows', () => {
-  test('CI workflow file exists and is valid YAML', () => {
-    const p = '.github/workflows/ci.yml';
-    expect(fs.existsSync(p)).toBe(true);
-    expect(() => yaml.load(fs.readFileSync(p, 'utf8'))).not.toThrow();
+describe('Task 003 — Product CRUD API Endpoints', () => {
+  beforeEach(() => {
+    // Reset products array to initial state for each test
+    products.length = 0;
+    products.push({ id: 1, name: 'Laptop', price: 999 }, { id: 2, name: 'Phone', price: 599 });
   });
 
-  test('CI uses Node 20.x in matrix', () => {
-    const cfg = yaml.load(fs.readFileSync('.github/workflows/ci.yml', 'utf8'));
-    const matrix = cfg.jobs && cfg.jobs.build && cfg.jobs.build.strategy && cfg.jobs.build.strategy.matrix;
-    expect(matrix).toBeDefined();
-    expect(JSON.stringify(matrix).includes('20')).toBe(true);
+  test('GET /api/products/:id - retrieves existing product', async () => {
+    const productId = 1;
+    const response = await request(app).get(`/api/products/${productId}`);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ id: 1, name: 'Laptop', price: 999 });
   });
 
-  test('Docker workflow exists and references docker build action', () => {
-    const p = '.github/workflows/docker.yml';
-    expect(fs.existsSync(p)).toBe(true);
-    const text = fs.readFileSync(p, 'utf8');
-    expect(text.includes('docker/build-push-action') || text.includes('docker build')).toBe(true);
+  test('GET /api/products/:id - returns 404 for non-existent product', async () => {
+    const productId = 999;
+    const response = await request(app).get(`/api/products/${productId}`);
+    expect(response.status).toBe(404);
+    expect(response.body).toHaveProperty('error', 'Product not found');
   });
 
-  test('Lint workflow runs eslint or prettier', () => {
-    const p = '.github/workflows/lint.yml';
-    expect(fs.existsSync(p)).toBe(true);
-    const text = fs.readFileSync(p, 'utf8');
-    expect(text.match(/eslint|prettier/)).not.toBeNull();
+  test('POST /api/products - creates new product successfully', async () => {
+    const newProduct = { name: 'Tablet', price: 299 };
+    const response = await request(app).post('/api/products').send(newProduct);
+    expect(response.status).toBe(201);
+    expect(response.body).toHaveProperty('id', 3);
+    expect(response.body.name).toBe('Tablet');
+    expect(response.body.price).toBe(299);
+    expect(products).toHaveLength(3);
   });
 
-  test('Depcheck workflow or script present', () => {
-    const p = '.github/workflows/depcheck.yml';
-    expect(fs.existsSync(p)).toBe(true);
-    const text = fs.readFileSync(p, 'utf8');
-    expect(text.includes('depcheck') || text.includes('npx depcheck')).toBe(true);
+  test('POST /api/products - returns 400 for invalid data (missing name)', async () => {
+    const invalidProduct = { price: 299 };
+    const response = await request(app).post('/api/products').send(invalidProduct);
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('error');
   });
 
-  test('Dependabot config present', () => {
-    expect(fs.existsSync('.github/dependabot.yml')).toBe(true);
-    expect(() => yaml.load(fs.readFileSync('.github/dependabot.yml', 'utf8'))).not.toThrow();
+  test('PUT /api/products/:id - updates existing product', async () => {
+    const productId = 1;
+    const updateData = { name: 'Gaming Laptop', price: 1299 };
+    const response = await request(app).put(`/api/products/${productId}`).send(updateData);
+    expect(response.status).toBe(200);
+    expect(response.body.name).toBe('Gaming Laptop');
+    expect(products.find(p => p.id === 1).price).toBe(1299);
   });
 
-  test('Project builds successfully (npm run build)', () => {
-    // run in CI-friendly non-interactive env; fails will throw
-    execSync('npm run build', { stdio: 'inherit' });
-    expect(true).toBe(true);
+  test('PUT /api/products/:id - returns 404 for non-existent product', async () => {
+    const productId = 999;
+    const updateData = { name: 'New Item', price: 100 };
+    const response = await request(app).put(`/api/products/${productId}`).send(updateData);
+    expect(response.status).toBe(404);
+    expect(response.body).toHaveProperty('error', 'Product not found');
+  });
+
+  test('DELETE /api/products/:id - deletes existing product', async () => {
+    const productId = 1;
+    const response = await request(app).delete(`/api/products/${productId}`);
+    expect(response.status).toBe(200);
+    expect(products).toHaveLength(1);
+    expect(products.find(p => p.id === 1)).toBeUndefined();
   });
 });

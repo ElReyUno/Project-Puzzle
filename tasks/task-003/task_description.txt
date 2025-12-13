@@ -1,18 +1,18 @@
 task_description: |
-  Task: CI/CD & Security Automation
-  Instructions: Add and configure GitHub Actions workflows for CI (Node 20 build/test/lint), Docker image build/test, lint/static analysis, depcheck dependency scanning, Dependabot alerts, and CodeQL analysis. Ensure all workflows are valid, run successfully, and meet Project Puzzle acceptance criteria. Document the configuration and validate with tests.
+  Task: Implement Product CRUD API Endpoints
+  Instructions: Extend the backend API to support full CRUD operations for products. Add GET, POST, PUT, and DELETE endpoints to /api/products with proper validation, error handling, and in-memory persistence. Ensure the implementation is secure, follows RESTful conventions, and integrates seamlessly with the existing Express setup. The task must start from the clean starter repo state and result in passing tests.
 
   Requirements:
-  - Add CI workflow for Node 20: install, build, test, lint.
-  - Add Docker workflow: build image, run tests in container.
-  - Add lint/static analysis workflow: eslint + prettier.
-  - Add depcheck workflow: scan for unused dependencies.
-  - Add Dependabot config for dependency updates.
-  - Add CodeQL workflow for security analysis.
-  - All workflows must be valid YAML and pass on push/PR.
-  - Success criteria: All workflows present, valid, and passing; security/config best practices followed.
+  - Add GET /api/products/:id to retrieve a single product by ID (return 404 if not found).
+  - Add POST /api/products to create a new product (require name and price; validate price as positive number; auto-assign ID).
+  - Add PUT /api/products/:id to update an existing product (validate fields; return 404 if not found).
+  - Add DELETE /api/products/:id to remove a product (return 404 if not found).
+  - Implement input validation (e.g., name: string, price: number > 0) and error responses (400 for bad input, 404 for not found).
+  - Use in-memory storage (extend the existing products array) without external dependencies.
+  - Ensure endpoints are testable via HTTP requests and align with the app's product model.
+  - Success criteria: All endpoints functional, validated, and tested; no breaking changes to existing routes.
 
 difficulty: medium
 category: Feature
-tags: [github-actions, ci, docker, lint, security, dependabot, codeql]
+tags: [backend, api, crud, express, validation, rest]
 parser_name: jest

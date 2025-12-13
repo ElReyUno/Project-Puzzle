@@ -1,8 +1,15 @@
 #!/bin/sh
 set -e
 
-# Default to task-001 if not provided
-TASK_ID=${1:-task-001}
 
-# Run the task_tests.js for the TASK_ID using npx jest (ensures jest is in PATH inside container)
-exec npx jest "tasks/${TASK_ID}/task_tests.js" --runInBand
+# If a task ID is provided, run only that task's tests. Otherwise, run all task test files.
+if [ -n "$1" ]; then
+	TASK_ID="$1"
+	exec npx jest "tasks/${TASK_ID}/task_tests.js" --runInBand
+else
+	# Find all task test files and run them sequentially
+	for testfile in tasks/task-*/task_tests.js; do
+		echo "Running tests in $testfile"
+		npx jest "$testfile" --runInBand || exit 1
+	done
+fi

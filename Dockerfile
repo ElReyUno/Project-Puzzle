@@ -30,16 +30,21 @@ RUN npm install -g npm@11.7.0
 RUN npm install && npm cache clean --force
 
 # Copy built application from build stage
-COPY --from=build /app/build ./build
+COPY --from=build /app/src/build ./build
 
 # Copy run_tests.sh
 COPY run_tests.sh ./
 
+
 # Copy tasks directory for testing
 COPY tasks/ ./tasks/
 
+
 # Copy babel.config.cjs for testing
 COPY babel.config.cjs ./
+
+# Copy .github directory for workflow and config tests
+COPY .github/ ./.github/
 
 # Copy source code for testing
 COPY --from=build /app/backend ./backend
@@ -55,5 +60,5 @@ RUN chmod +x run_tests.sh
 # Expose port (assuming React dev server or backend)
 EXPOSE 3000
 
-# Entrypoint for testing
+# Set ENTRYPOINT for robust test execution (only once, at the end)
 ENTRYPOINT ["./run_tests.sh"]
