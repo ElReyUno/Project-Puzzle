@@ -24,7 +24,7 @@
     "@babel/preset-env": "^7.28.5",
     "@babel/preset-react": "^7.22.0",
     "@testing-library/jest-dom": "^6.0.0",
-    "@testing-library/react": "^14.3.1",
+    "@testing-library/react": "^16.3.0",
     "babel-jest": "^27.5.1",
     "jest": "^27.5.1",
     "js-yaml": "^4.1.1",
