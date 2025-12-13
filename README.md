@@ -70,3 +70,38 @@ Enable:
 * Lint & static analysis: eslint + prettier checks.
 * Dependency check: run depcheck and optionally fail on unused deps.
 * Security: enable Dependabot alerts and CodeQL analysis.
+
+## Task Summaries
+
+### Task 001: VendoVerse
+- **Description:** Sets up the initial VendoVerse full-stack e-commerce application using Node.js and React.
+- **Category:** Feature
+- **Tags:** nodejs, react, ecommerce, fullstack
+
+### Task 002: CI/CD & Security Automation
+- **Description:** Implements continuous integration and security automation using GitHub Actions, Docker, linting, dependency checks, Dependabot, and CodeQL.
+- **Category:** Feature
+- **Tags:** github-actions, ci, docker, lint, security, dependabot, codeql
+
+### Task 003: Implement Product CRUD API Endpoints
+- **Description:** Adds backend API endpoints for product Create, Read, Update, and Delete (CRUD) operations with validation, using Express and RESTful conventions.
+- **Category:** Feature
+- **Tags:** backend, api, crud, express, validation, rest
+
+---
+
+**Testing:**  
+Each task includes a comprehensive Jest test suite (`task_tests.js`) with 6+ AAA-style tests, ensuring robust validation of new features and bug fixes.
+
+**Diffs:**  
+Implementation changes for each task are documented in `task_diff.txt`, showing multi-file, multi-hunk diffs for transparency and reproducibility.
+
+**Independence:**  
+Tasks are designed to be independent and can be applied in any order to the starter project.
+
+**Contribution:**  
+For best results, review each task's description and test suite before applying its diff to the codebase.
+
+---
+
+*For details on running and testing each task, see the instructions above.*
